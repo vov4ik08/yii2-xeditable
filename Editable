@@ -5,6 +5,21 @@ use yii\base\Action;
 use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 
+/*
+***************************
+Usage Example: - add in controller
+ public function actions()
+    {
+        return [
+            'editable' => [
+                'class' => 'app\actions\Editable',
+                'modelclass' => '\app\modules\content\models\Category',
+            ],
+        ];
+    }
+****************************
+*/
+
 class Editable extends Action{
     public $modelclass;
     public function run()
