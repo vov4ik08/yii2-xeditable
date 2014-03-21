@@ -13,6 +13,7 @@ Usage Example: - add in controller
         return [
             'editable' => [
                 'class' => 'app\actions\Editable',
+                'scenario'=>'editable',  //optional
                 'modelclass' => '\app\modules\content\models\Category',
             ],
         ];
@@ -22,6 +23,7 @@ Usage Example: - add in controller
 
 class Editable extends Action{
     public $modelclass;
+    public $scenario='';
     public function run()
     {
         if(\Yii::$app->request->getIsPost()){
@@ -30,6 +32,9 @@ class Editable extends Action{
             $value=trim($_POST['value']); 
             $modelclass=$this->modelclass;
             $model= $modelclass::find($pk);  
+            if($this->scenario){
+                $model->setScenario($this->scenario);
+            }
             if($model===null)
                 throw new NotFoundHttpException();
             $model->$name = $value;
