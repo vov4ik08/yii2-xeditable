@@ -56,10 +56,15 @@ class EditableColumn extends DataColumn
 
         return $value;
 
-
-
-
-
     }
+    
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function renderDataCellContent($model, $key, $index)
+	{
+		return $this->grid->formatter->format($this->getDataCellContent($model, $key, $index), $this->format);
+	}
 
 } 
