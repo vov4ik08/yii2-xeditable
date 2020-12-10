@@ -19,6 +19,7 @@ class EditableColumn extends DataColumn
 
     public $mode = 'inline';
     public $dataType = 'text';
+    public $pk='id';
     public $dataTitle = '';
     public $editable = '';
     private $view = null;
@@ -51,7 +52,7 @@ class EditableColumn extends DataColumn
             $value = call_user_func($this->value, $model, $index, $this);
         }
 
-        $value = '<a href="#" data-name="'.$this->attribute.'" data-value="' . $model->{$this->attribute} . '"  class="editable" data-type="' . $this->dataType . '" data-pk="' . $model->id . '" data-url="' . $this->url . '" data-title="' . $this->dataTitle . '">' . $value . '</a>';
+        $value = '<a href="#" data-name="'.$this->attribute.'" data-value="' . $model->{$this->attribute} . '"  class="editable" data-type="' . $this->dataType . '" data-pk="' . $model->{$this->pk} . '" data-url="' . $this->url . '" data-title="' . $this->dataTitle . '">' . $value . '</a>';
 
 
         return $value;

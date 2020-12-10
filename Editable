@@ -1,0 +1,48 @@
+namespace app\actions;
+
+
+use yii\base\Action;
+use yii\helpers\VarDumper;
+use yii\web\NotFoundHttpException;
+
+/*
+***************************
+Usage Example: - add in controller
+ public function actions()
+    {
+        return [
+            'editable' => [
+                'class' => 'app\actions\Editable',
+                'scenario'=>'editable',  //optional
+                'modelclass' => '\app\modules\content\models\Category',
+            ],
+        ];
+    }
+****************************
+*/
+
+class Editable extends Action{
+    public $modelclass;
+    public $scenario='';
+    public function run()
+    {
+        if(\Yii::$app->request->getIsPost()){
+            $pk=$_POST['pk'];
+            $name=$_POST['name'];
+            $value=trim($_POST['value']); 
+            $modelclass=$this->modelclass;
+            $model= $modelclass::find($pk);  
+            if($this->scenario){
+                $model->setScenario($this->scenario);
+            }
+            if($model===null)
+                throw new NotFoundHttpException();
+            $model->$name = $value;
+            if ($model->validate()){
+                $model->update();
+            }else{
+                VarDumper::dump($model->getErrors(),10);
+            }
+        }
+    }
+} 
